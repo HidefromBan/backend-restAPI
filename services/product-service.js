@@ -9,7 +9,7 @@ class ProductsService{
 
   /* metodos del servicio */
   generate(){
-    const limit = 3;
+    const limit = 100;
 
     for (let index = 0; index < limit; index++) {
       this.products.push({
