@@ -1,6 +1,6 @@
 const routerApi = require('./routes')
 const express = require('express')
-const {logErrors, errorHandler} = require('./middlewares/error.handler')
+const {logErrors, errorHandler, boomErrorHandler} = require('./middlewares/error.handler')
 const app = express();
 const port = 3000;
 
@@ -20,3 +20,5 @@ app.use(errorHandler);
 app.listen(port,()=>{
   console.log('Estamos escuchando papu en el puerto ' + port);
 })
+
+

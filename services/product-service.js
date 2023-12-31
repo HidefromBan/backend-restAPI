@@ -7,8 +7,9 @@ class ProductsService{
     this.generate();
   }
 
+  /* metodos del servicio */
   generate(){
-    const limit = 100;
+    const limit = 3;
 
     for (let index = 0; index < limit; index++) {
       this.products.push({
@@ -19,8 +20,7 @@ class ProductsService{
       });
     }
   }
-
- async create(data){
+  async create(data){
     const newProduct = {
       id: faker.string.uuid(),
       ...data
@@ -32,11 +32,17 @@ class ProductsService{
     return new Promise((resolve,reject)=> {
       setTimeout(() => {
         resolve(this.products)
-      }, 5000);
+      }, 1000);
     })
   }
   async findOne(id){
-    return this.products.find(item => item.id === id);
+   const product = this.products.find(item => item.id === id);
+   if(!product){
+    throw new Error('product not found')
+   }else {
+
+     return product
+   }
   }
   async update(id,changes){
     const index = this.products.findIndex( item => item.id === id);
@@ -57,7 +63,10 @@ class ProductsService{
       throw new Error('product not found ')
     }
     this.products.splice(index,1);
-    return { id };
+    return {
+          id,
+          message: 'This product has been deleted.'
+        };
   }
 }
 
