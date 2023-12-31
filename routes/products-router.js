@@ -8,22 +8,23 @@ router.use(express.json())
 
 
 /* recibir productos */
-router.get('/', (req,res)=> {
-  try {
-    const products = service.find();
+router.get('/', async (req,res)=> {
+   try{
+    const products = await service.find();
     res.status(200).json(products)
-  } catch (error) {
-    res.status(404).json({
-      message: "error"
-    })
+   }catch(error){
+      res.status(404).json({
+        "message" : "can't find products."
+      })
+   }
   }
-})
+)
 
 /* recibir 1 producto por id */
-router.get('/:id',(req,res)=>{
+router.get('/:id',  (req,res)=>{
   try {
    const {id} = req.params;
-   const products = service.findOne(id);
+   const products =  service.findOne(id);
     res.status(200).json(products)
   } catch (error) {
     res.status(404).json({
@@ -32,18 +33,18 @@ router.get('/:id',(req,res)=>{
  }
 })
 /* crear 1 producto */
-router.post('/',(req,res)=>{
+router.post('/', async (req,res)=>{
   const body = req.body;
-  const newProduct = service.create(body);
+  const newProduct =  await service.create(body);
   res.status(201).json(newProduct)
 })
 
 /* modificar 1 producto */
-router.patch('/:id',(req,res)=>{
+router.patch('/:id', async (req,res)=>{
   try {
     const {id} = req.params;
     const body = req.body;
-    const product = service.update(id,body)
+    const product = await service.update(id,body)
     res.json(product)
   } catch (error) {
     res.status(404).json({
