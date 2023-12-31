@@ -21,17 +21,14 @@ router.get('/', async (req,res)=> {
 )
 
 /* recibir 1 producto por id */
-router.get('/:id',  (req,res)=>{
+router.get('/:id',  (req,res,next)=>{
   try {
    const {id} = req.params;
-   const products =  service.findOne(id);
+   const products =  servicee.findOne(id);
     res.status(200).json(products)
   } catch (error) {
-    res.status(404).json({
-      message: "no se ha encontrado"
-    })
- }
-})
+    next(error)
+  }})
 /* crear 1 producto */
 router.post('/', async (req,res)=>{
   const body = req.body;
